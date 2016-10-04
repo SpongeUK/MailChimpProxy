@@ -15,8 +15,12 @@ router.post('/', function (req, res) {
     const client = new MailChimp(settings.api.key, settings.api.host);
     const subscriber = req.body.email;
 
-    client.addMemberToList(settings.list.id, subscriber);
-    res.sendStatus(200).send({ "status": "accepted", "email": subscriber });
+    client.addMemberToList(settings.list.id, subscriber)
+          .then(() => res.send(200, { "status": "accepted", "email": subscriber }))
+          .catch(e => {
+              console.log(e);
+              res.sendStatus(500).send(e);
+          });
 });
 
 module.exports = router;
