@@ -19,7 +19,6 @@ router.post('/', function (req, res) {
     client.addMemberToList(settings.list.id, subscriber)
           .then(() => res.send(200, { "status": "accepted", "email": subscriber }))
           .catch(e => {
-              console.log(e);
               res.sendStatus(500).send(e);
           });
 });
